@@ -25,4 +25,5 @@ priority=9999
 Then run `emerge --sync` to make this overlay available on your system.
 
 ---
+
 *Please report issues via the GitHub Issue Tracker!
