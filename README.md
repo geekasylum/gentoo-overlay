@@ -11,8 +11,7 @@ risk.
 ##Usage
 
 To add this overlay to your [Portage](https://wiki.gentoo.org/wiki/Portage)
-tree, create a configuration file named `/etc/portage/repos.conf/geekasylum`
-which contains:
+tree, create `/etc/portage/repos.conf/geekasylum`, containing:
 
 ```
 [geekasylum]
