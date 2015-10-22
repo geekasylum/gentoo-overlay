@@ -1,0 +1,53 @@
+#!/sbin/runscript
+# Copyright (C) 2013 Jonathan Vasquez <jvasquez1011@gmail.com>
+# Distributed under the terms of the Simplified BSD License.
+
+description="Syncronise files and folders using BitTorrent Sync"
+
+BTSYNC_PATH="${BTSYNC_PATH:-/opt/${SVCNAME}}"
+BTSYNC_BINARY="${BTSYNC_BINARY:-/opt/bin/${SVCNAME}}"
+BTSYNC_CONFIG="${BTSYNC_CONFIG:-/etc/${SVCNAME}.conf}"
+BTSYNC_PIDDIR="${BTSYNC_PIDDIR:-/run/${SVCNAME}}"
+BTSYNC_PID="${BTSYNC_PID:-${BTSYNC_PIDDIR}/${SVCNAME}.pid}"
+BTSYNC_USER="${BTSYNC_USER:-${SVCNAME}}"
+BTSYNC_GROUP="${BTSYNC_GROUP:-${SVCNAME}}"
+
+depend() {
+    need localmount net
+    after bootmisc
+}
+
+start() {
+    if [ ! -d "${BTSYNC_PIDDIR}" ]; then
+        mkdir "${BTSYNC_PIDDIR}"
+        chown "${BTSYNC_USER}:${BTSYNC_GROUP}" "${BTSYNC_PIDDIR}"
+    fi
+
+    ebegin "Starting ${SVCNAME}"
+    start-stop-daemon \
+        --start \
+	--nice 5 \
+	--ionice 3 \
+        --pidfile "${BTSYNC_PID}" \
+        --user "${BTSYNC_USER}" \
+        --group "${BTSYNC_GROUP}" \
+        --exec "${BTSYNC_BINARY}" \
+        -- --config "${BTSYNC_CONFIG}"
+    eend $?
+}
+
+stop() {
+	ebegin "Stopping ${SVCNAME}"
+	start-stop-daemon --stop --exec "${BTSYNC_BINARY}" \
+	    --pidfile "${BTSYNC_PID}"
+	eend $?
+}
+
+reload() {
+	ebegin "Reloading ${SVCNAME}"
+	start-stop-daemon --signal HUP --exec "${BTSYNC_BINARY}" \
+	    --pidfile "${BTSYNC_PID}"
+	eend $?
+}
+
+# End of file

@@ -1,0 +1,23 @@
+# BitTorrent Sync Service Config
+#
+# Options available:
+#
+#  BTSYNC_PATH   The btsync storage path (Ususaly the btsync user home dir)
+#  BTSYNC_BINARY Path to the binary that provides the service
+#  BTSYNC_CONFIG Location of the config file used by the service
+#  PTSYNC_PIDDIR Where to store the pid file (Usually located under under /run)
+#  PTSYNC_PID    Path to the actual pid file
+#  BTSYNC_USER   The user that the service will run as
+#  BTSYNC)GROUP  The group that the service runs under
+#
+# All of the above have reasonable defaults. Override below if needed
+#
+
+# User and Group
+BTSYNC_USER="btsync"
+BTSYNC_GROUP="btsync"
+
+# Config file
+BTSYNC_CONFIG="/etc/btsync.conf"
+
+# End of file
