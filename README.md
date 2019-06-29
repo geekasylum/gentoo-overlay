@@ -18,7 +18,8 @@ tree, create `/etc/portage/repos.conf/geekasylum`, containing:
 location = /usr/local/portage/geekasylum
 sync-type = git
 sync-uri = https://github.com/geekasylum/gentoo-overlay.git
-priority=9999
+clone-depth = 1
+priority = 9999
 ```
 
 Then run `emerge --sync` to make this overlay available on your system.
